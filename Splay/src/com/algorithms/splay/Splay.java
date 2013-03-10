@@ -2,10 +2,14 @@ package com.algorithms.splay;
 
 public class Splay {
 
-	private static Node ROOT;
+	private Node root;
+	
+	public Splay() {
+		root = new Node(0);
+	}
 	
 	public void insert(int value) {
-		ROOT = insert(value, ROOT);
+		root = insert(value, root);
 	}
 	
 	private Node insert(int value, Node node) {
@@ -32,8 +36,8 @@ public class Splay {
 	}
 	
 	public Node find(int value) {
-		ROOT = find(value, ROOT);
-		return ROOT;
+		root = find(value, root);
+		return root;
 	}
 	
 	private Node find(int value, Node node) {
@@ -71,16 +75,16 @@ public class Splay {
 	}
 	
 	private void zig(Node node) {
-		Node root = node.getParent();
+		Node parent = node.getParent();
 		node.setParent(null);
 //		ROOT = node;
 		if(node.isLeft()) {
-			root.setLeft(node.getRight());
-			node.setRight(root);			
+			parent.setLeft(node.getRight());
+			node.setRight(parent);			
 		}
 		else {
-			root.setRight(node.getLeft());
-			node.setLeft(root);
+			parent.setRight(node.getLeft());
+			node.setLeft(parent);
 		}
 	}
 	
@@ -130,7 +134,15 @@ public class Splay {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ROOT = new Node(0);
+		Splay splay = new Splay();
+		for (int i = 1; i < 100; i++) {
+			splay.insert(i);
+		}
+		for (int i = 100; i >= 0; i--) {
+			Node node = splay.find(i);
+			System.out.println(node.getValue());
+		}
+		
 	}
 
 }
