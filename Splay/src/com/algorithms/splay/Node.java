@@ -1,9 +1,18 @@
 package com.algorithms.splay;
 
 public class Node {
+	private int value;
 	private Node parent, leftChild, rightChild;
 	private boolean left, right;
 
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+	
 	public Node getParent() {
 		return parent;
 	}
@@ -60,9 +69,12 @@ public class Node {
 		this.left = false;
 	}
 	
-	public Node() { }
+	public Node(int value) { 
+		this.value = value; 
+	}
 	
-	public Node(Node parent, boolean isLeftChild) {
+	public Node(int value, Node parent, boolean isLeftChild) {
+		this(value);
 		this.parent = parent;
 		this.left = isLeftChild;
 		this.right = !isLeftChild;
