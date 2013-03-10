@@ -65,10 +65,16 @@ public class Splay {
 			ROOT = node;
 		}
 		if(parent.isLeft()) {
-			
+			grandparent.setLeft(node.getRight());
+			parent.setRight(node.getLeft());
+			node.setRight(grandparent);
+			node.setLeft(parent);			
 		}
 		else {
-			
+			grandparent.setRight(node.getLeft());
+			parent.setLeft(node.getRight());
+			node.setLeft(grandparent);
+			node.setRight(parent);
 		}
 	}
 	
