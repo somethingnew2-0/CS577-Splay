@@ -1,7 +1,8 @@
 package com.algorithms.splay;
 
 public class Node {
-	private Node parent, left, right;
+	private Node parent, leftChild, rightChild;
+	private boolean left, right;
 
 	public Node getParent() {
 		return parent;
@@ -12,27 +13,55 @@ public class Node {
 	}
 
 	public Node getLeft() {
-		return left;
+		return leftChild;
 	}
 
 	public void setLeft(Node left) {
-		this.left = left;
+		this.leftChild = left;
 	}
 
 	public Node getRight() {
-		return right;
+		return rightChild;
 	}
 
 	public void setRight(Node right) {
-		this.right = right;
+		this.rightChild = right;
 	}
 	
 	public boolean isRoot() {
 		return parent == null;
 	}
 	
-	public Node(Node parent) {
+	public boolean isLeft() {
+		if(!isRoot()) {
+			return left;
+		}
+		return false;
+	}
+	
+	public void setLeft() {
+		this.left = true;
+		this.right = false;
+	}
+	
+	public boolean isRight() {
+		if(!isRoot()) {
+			return right;
+		}
+		return false;
+	}
+	
+	public void setRight() {
+		this.right = true;
+		this.left = false;
+	}
+	
+	public Node() { }
+	
+	public Node(Node parent, boolean isLeftChild) {
 		this.parent = parent;
+		this.left = isLeftChild;
+		this.right = !isLeftChild;
 	}
 
 }
