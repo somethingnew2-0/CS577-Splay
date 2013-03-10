@@ -2,7 +2,7 @@ package com.algorithms.splay;
 
 public class Splay {
 
-	private static Node root;
+	private static Node ROOT;
 	
 	private void splay(Node node) {
 		while(!node.isRoot()) {
@@ -23,11 +23,38 @@ public class Splay {
 	}
 	
 	private void zig(Node node) {
-		
+		Node root = node.getParent();
+		node.setParent(null);
+		ROOT = node;
+		if(node.isLeft()) {
+			root.setLeft(node.getRight());
+			node.setRight(root);			
+		}
+		else {
+			root.setRight(node.getLeft());
+			node.setLeft(root);
+		}
 	}
 	
 	private void zigZig(Node node) {
-		
+		Node parent = node.getParent();
+		Node grandparent = parent.getParent();
+		if(grandparent.isRoot()) {
+			node.setParent(null);
+			ROOT = node;
+		}
+		if(parent.isLeft()) {
+			grandparent.setLeft(parent.getRight());
+			parent.setLeft(node.getRight());
+			parent.setRight(grandparent);
+			node.setRight(parent);
+		}
+		else {
+			grandparent.setRight(parent.getLeft());
+			parent.setRight(node.getLeft());
+			parent.setLeft(grandparent);
+			node.setLeft(parent);
+		}
 	}
 	
 	private void zigZag(Node node) {
@@ -38,7 +65,7 @@ public class Splay {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		root = new Node();
+		ROOT = new Node();
 	}
 
 }

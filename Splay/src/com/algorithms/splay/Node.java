@@ -18,6 +18,8 @@ public class Node {
 
 	public void setLeft(Node left) {
 		this.leftChild = left;
+		left.setLeft();
+		left.setParent(this);
 	}
 
 	public Node getRight() {
@@ -26,6 +28,8 @@ public class Node {
 
 	public void setRight(Node right) {
 		this.rightChild = right;
+		right.setRight();
+		right.setParent(this);
 	}
 	
 	public boolean isRoot() {
