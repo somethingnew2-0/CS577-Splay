@@ -4,6 +4,54 @@ public class Splay {
 
 	private static Node ROOT;
 	
+	public void insert(int value) {
+		ROOT = insert(value, ROOT);
+	}
+	
+	private Node insert(int value, Node node) {
+		if(node.getValue() == value) {
+			splay(node);
+			return node;
+		} else if (value < node.getValue()) {
+			if(node.getLeft() != null) {
+				return find(value, node.getLeft());
+			}
+			else {
+				node.setLeft(new Node(value));
+				return node.getLeft();
+			}
+		} else {
+			if(node.getRight() != null) {
+				return find(value, node.getRight());
+			}
+			else {
+				node.setRight(new Node(value));
+				return node.getRight();
+			}
+		}
+	}
+	
+	public Node find(int value) {
+		ROOT = find(value, ROOT);
+		return ROOT;
+	}
+	
+	private Node find(int value, Node node) {
+		if(node.getValue() == value) {
+			splay(node);
+			return node;
+		} else if (value < node.getValue()) {
+			if(node.getLeft() != null) {
+				return find(value, node.getLeft());
+			}
+		} else if (value > node.getValue()) {
+			if(node.getRight() != null) {
+				return find(value, node.getRight());
+			}
+		}
+		return null;
+	}
+	
 	private void splay(Node node) {
 		while(!node.isRoot()) {
 			if(node.getParent().isRoot()) {
@@ -25,7 +73,7 @@ public class Splay {
 	private void zig(Node node) {
 		Node root = node.getParent();
 		node.setParent(null);
-		ROOT = node;
+//		ROOT = node;
 		if(node.isLeft()) {
 			root.setLeft(node.getRight());
 			node.setRight(root);			
@@ -41,7 +89,7 @@ public class Splay {
 		Node grandparent = parent.getParent();
 		if(grandparent.isRoot()) {
 			node.setParent(null);
-			ROOT = node;
+//			ROOT = node;
 		}
 		if(parent.isLeft()) {
 			grandparent.setLeft(parent.getRight());
@@ -62,7 +110,7 @@ public class Splay {
 		Node grandparent = parent.getParent();
 		if(grandparent.isRoot()) {
 			node.setParent(null);
-			ROOT = node;
+//			ROOT = node;
 		}
 		if(parent.isLeft()) {
 			grandparent.setLeft(node.getRight());
@@ -82,7 +130,7 @@ public class Splay {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ROOT = new Node();
+		ROOT = new Node(0);
 	}
 
 }
