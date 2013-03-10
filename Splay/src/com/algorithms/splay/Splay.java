@@ -18,7 +18,7 @@ public class Splay {
 			return node;
 		} else if (value < node.getValue()) {
 			if(node.getLeft() != null) {
-				return find(value, node.getLeft());
+				return insert(value, node.getLeft());
 			}
 			else {
 				node.setLeft(new Node(value));
@@ -26,7 +26,7 @@ public class Splay {
 			}
 		} else {
 			if(node.getRight() != null) {
-				return find(value, node.getRight());
+				return insert(value, node.getRight());
 			}
 			else {
 				node.setRight(new Node(value));
