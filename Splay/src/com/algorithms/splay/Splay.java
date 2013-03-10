@@ -58,7 +58,18 @@ public class Splay {
 	}
 	
 	private void zigZag(Node node) {
-		
+		Node parent = node.getParent();
+		Node grandparent = parent.getParent();
+		if(grandparent.isRoot()) {
+			node.setParent(null);
+			ROOT = node;
+		}
+		if(parent.isLeft()) {
+			
+		}
+		else {
+			
+		}
 	}
 	
 	/**
