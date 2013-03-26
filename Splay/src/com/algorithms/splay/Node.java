@@ -73,6 +73,8 @@ public class Node {
 		this.value = value; 
 	}
 	
+	public Node() {}
+	
 	public Node(int value, Node parent, boolean isLeftChild) {
 		this(value);
 		this.parent = parent;
