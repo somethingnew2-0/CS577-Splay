@@ -3,7 +3,7 @@ package com.algorithms.splay;
 public class Node {
 	private int value;
 	private Node parent, leftChild, rightChild;
-	private boolean left, right;
+	private boolean left;
 
 	public int getValue() {
 		return value;
@@ -54,18 +54,16 @@ public class Node {
 	
 	public void setLeft() {
 		this.left = true;
-		this.right = false;
 	}
 	
 	public boolean isRight() {
 		if(!isRoot()) {
-			return right;
+			return !left;
 		}
 		return false;
 	}
 	
 	public void setRight() {
-		this.right = true;
 		this.left = false;
 	}
 	
@@ -79,7 +77,6 @@ public class Node {
 		this(value);
 		this.parent = parent;
 		this.left = isLeftChild;
-		this.right = !isLeftChild;
 	}
 
 }
