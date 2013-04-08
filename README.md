@@ -9,4 +9,4 @@ implement each data structure and compare them on sequences of dictionary data
 structure operations.
 Details:  Implement each data structure and compare on sequences of operations.  
 Analyze your results.   See if you can design input sequences which are hard for each 
-structure.  Report your findings in a “lab report.”
+structure.  Report your findings in a "lab report."
