@@ -141,9 +141,9 @@ public class Splay {
 			setRoot(node);
 		} else {
 			if(grandparent.isLeft()) {
-				grandparent.getParent().setLeft(node);
+				((SplayNode)grandparent.getParent()).setLeft(node);
 			} else {
-				grandparent.getParent().setRight(node);
+				((SplayNode)grandparent.getParent()).setRight(node);
 			}
 		}
 	}
@@ -158,10 +158,10 @@ public class Splay {
 	 */
 	public static void main(String[] args) {
 		Splay splay = new Splay();
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= 100; i++) {
 			splay.insert(i);
 		}
-		for (int i = 5; i >= 1; i--) {
+		for (int i = 100; i >= 1; i--) {
 			SplayNode node = splay.find(i);
 			System.out.println(node.getValue());
 		}
