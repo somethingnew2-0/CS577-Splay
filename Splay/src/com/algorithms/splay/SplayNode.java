@@ -14,12 +14,16 @@ public class SplayNode extends Node {
 	
 	public void setLeft(SplayNode left) {
 		super.setLeft(left);
-		left.setLeft();
+		if(left != null) {
+			left.setLeft();
+		}
 	}
 
 	public void setRight(SplayNode right) {
 		super.setRight(right);
-		right.setRight();
+		if(right != null) {
+			right.setRight();
+		}
 	}
 	
 	public boolean isLeft() {

@@ -37,7 +37,9 @@ public class Node {
 
 	public void setLeft(Node left) {
 		this.leftChild = left;
-		left.setParent(this);
+		if(left != null) {
+			left.setParent(this);
+		}
 	}
 
 	public Node getRight() {
@@ -46,7 +48,9 @@ public class Node {
 
 	public void setRight(Node right) {
 		this.rightChild = right;
-		right.setParent(this);
+		if(right != null) {
+			right.setParent(this);
+		}
 	}
 	
 	public boolean isRoot() {

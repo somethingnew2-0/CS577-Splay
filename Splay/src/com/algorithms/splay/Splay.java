@@ -5,11 +5,16 @@ public class Splay {
 	private SplayNode root;
 	
 	public Splay() {
-		root = new SplayNode(0);
+//		root = new SplayNode(0);
 	}
 	
-	public void insert(int value) {
-		root = insert(value, root);
+	public SplayNode insert(int value) {
+		if(root == null) {
+			root = new SplayNode(value);
+			return root;
+		} else {
+			return insert(value, root);
+		}
 	}
 	
 	private SplayNode insert(int value, SplayNode node) {
@@ -17,27 +22,26 @@ public class Splay {
 			splay(node);
 			return node;
 		} else if (value < node.getValue()) {
-			if(node.getLeft() != null) {
-				return insert(value, (SplayNode)node.getLeft());
-			}
-			else {
+			if(node.getLeft() == null) {
 				node.setLeft(new SplayNode(value));
 				return (SplayNode)node.getLeft();
 			}
-		} else {
-			if(node.getRight() != null) {
-				return insert(value, (SplayNode)node.getRight());
-			}
 			else {
+				return insert(value, (SplayNode)node.getLeft());
+			}
+		} else {
+			if(node.getRight() == null) {
 				node.setRight(new SplayNode(value));
 				return (SplayNode)node.getRight();
+			}
+			else {
+				return insert(value, (SplayNode)node.getRight());
 			}
 		}
 	}
 	
 	public SplayNode find(int value) {
-		root = find(value, root);
-		return root;
+		return find(value, root);
 	}
 	
 	private SplayNode find(int value, SplayNode node) {
@@ -76,34 +80,35 @@ public class Splay {
 	
 	private void zig(SplayNode node) {
 		SplayNode parent = (SplayNode)node.getParent();
-		node.setParent(null);
-//		ROOT = node;
 		if(node.isLeft()) {
-			parent.setLeft(node.getRight());
+			parent.setLeft((SplayNode)node.getRight());
 			node.setRight(parent);			
 		}
 		else {
-			parent.setRight(node.getLeft());
+			parent.setRight((SplayNode)node.getLeft());
 			node.setLeft(parent);
 		}
+		setRoot(node);
 	}
 	
 	private void zigZig(SplayNode node) {
 		SplayNode parent = (SplayNode)node.getParent();
 		SplayNode grandparent = (SplayNode)parent.getParent();
-		if(grandparent.isRoot()) {
-			node.setParent(null);
-//			ROOT = node;
-		}
 		if(parent.isLeft()) {
-			grandparent.setLeft(parent.getRight());
-			parent.setLeft(node.getRight());
+			parentCurrentNode(node, grandparent);
+
+			grandparent.setLeft((SplayNode)parent.getRight());
+			parent.setLeft((SplayNode)node.getRight());
+
 			parent.setRight(grandparent);
 			node.setRight(parent);
 		}
 		else {
-			grandparent.setRight(parent.getLeft());
-			parent.setRight(node.getLeft());
+			parentCurrentNode(node, grandparent);
+			
+			grandparent.setRight((SplayNode)parent.getLeft());
+			parent.setRight((SplayNode)node.getLeft());
+
 			parent.setLeft(grandparent);
 			node.setLeft(parent);
 		}
@@ -112,22 +117,40 @@ public class Splay {
 	private void zigZag(SplayNode node) {
 		SplayNode parent = (SplayNode)node.getParent();
 		SplayNode grandparent = (SplayNode)parent.getParent();
-		if(grandparent.isRoot()) {
-			node.setParent(null);
-//			ROOT = node;
-		}
 		if(parent.isLeft()) {
-			grandparent.setLeft(node.getRight());
-			parent.setRight(node.getLeft());
+			parentCurrentNode(node, grandparent);
+			
+			grandparent.setLeft((SplayNode)node.getRight());
+			parent.setRight((SplayNode)node.getLeft());
+			
 			node.setRight(grandparent);
 			node.setLeft(parent);			
-		}
-		else {
-			grandparent.setRight(node.getLeft());
-			parent.setLeft(node.getRight());
+		} else {
+			parentCurrentNode(node, grandparent);
+
+			grandparent.setRight((SplayNode)node.getLeft());
+			parent.setLeft((SplayNode)node.getRight());
+			
 			node.setLeft(grandparent);
 			node.setRight(parent);
 		}
+	}
+	
+	private void parentCurrentNode(SplayNode node, SplayNode grandparent) {
+		if(grandparent.isRoot()) {
+			setRoot(node);
+		} else {
+			if(grandparent.isLeft()) {
+				grandparent.getParent().setLeft(node);
+			} else {
+				grandparent.getParent().setRight(node);
+			}
+		}
+	}
+	
+	private void setRoot(SplayNode node) {
+		node.setParent(null);
+		root = node;
 	}
 	
 	/**
@@ -135,10 +158,10 @@ public class Splay {
 	 */
 	public static void main(String[] args) {
 		Splay splay = new Splay();
-		for (int i = 1; i < 100; i++) {
+		for (int i = 1; i <= 5; i++) {
 			splay.insert(i);
 		}
-		for (int i = 100; i >= 0; i--) {
+		for (int i = 5; i >= 1; i--) {
 			SplayNode node = splay.find(i);
 			System.out.println(node.getValue());
 		}
