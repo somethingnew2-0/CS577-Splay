@@ -44,6 +44,18 @@ public class RedBlackNode {
 			left.setParent(this);
 		}
 	}
+	
+	public boolean isRight() {
+		if (parent != null && parent.getRight() == this)
+			return true;
+		else return false;
+	}
+	
+	public boolean isLeft() {
+		if (parent != null && parent.getLeft() == this)
+			return true;
+		else return false;
+	}
 
 	public RedBlackNode getRight() {
 		return rightChild;
