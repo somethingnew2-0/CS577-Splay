@@ -2,12 +2,27 @@ package com.algorithms.splay;
 
 public class RedBlackNode {
 	boolean black;
+	boolean fake;
 	private int value;
 	private RedBlackNode parent, leftChild, rightChild;
 	
 	public RedBlackNode(boolean b) {
-		super();
 		black = b;
+		fake = false;
+	}
+	
+	public RedBlackNode(int fake) {
+		if (fake == 1) {
+			this.fake = true;
+			black = true;
+		}
+		else
+			this.fake = false;
+			
+	}
+	
+	public boolean isFake() {
+		return fake;
 	}
 	
 	public void setBlack() {
