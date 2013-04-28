@@ -1,4 +1,4 @@
-package com.algorithms.splay;
+
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,7 +15,7 @@ public class RedBlack {
 	}
 	
 	// returns null if not there
-	public RedBlackNode findParent(int value) {
+	private RedBlackNode findParent(int value) {
 		RedBlackNode tmp = root;
 		RedBlackNode prevPtr = null;
 		while (!tmp.isFake()) {
@@ -28,6 +28,8 @@ public class RedBlack {
 		return prevPtr;
 	}
 	
+	// returns a node if value found, else returns null
+	// if nothing has been inserted then this crashes
 	public RedBlackNode find(int value) {
 		return find(value, root);
 	}
@@ -44,7 +46,8 @@ public class RedBlack {
 				return find(value, node.getRight());
 			}
 		}
-		assert(1 == 0);
+		
+		// value not in tree
 		return null;
 	}
 	
