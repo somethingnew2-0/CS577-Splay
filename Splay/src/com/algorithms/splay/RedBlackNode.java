@@ -1,3 +1,4 @@
+package com.algorithms.splay;
 
 
 public class RedBlackNode {

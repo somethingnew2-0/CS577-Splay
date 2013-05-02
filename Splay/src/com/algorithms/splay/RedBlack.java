@@ -1,3 +1,4 @@
+package com.algorithms.splay;
 
 
 import java.util.LinkedList;
@@ -173,7 +174,7 @@ public class RedBlack {
 			return null;
 	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		final int NUM_INSERTS = 150;
 
 		int[] array = new int[NUM_INSERTS];
@@ -186,7 +187,7 @@ public class RedBlack {
 			T.insert(toPrint);
 			array[i] = toPrint;
 			System.out.print(toPrint + " ");
-		//	T.DFS();
+			// T.DFS();
 			T.byLevel();
 		}
 		System.out.println();
@@ -199,10 +200,10 @@ public class RedBlack {
 			if (tmp == null)
 				System.out.print("xx ");
 			else
-				System.out.print(tmp.getValue() +  " ");
+				System.out.print(tmp.getValue() + " ");
 			// T.find(rand.nextInt(NUM_INSERTS * 10));
 		}
-		
+
 		System.out.println("done");
 	}
 
@@ -229,15 +230,15 @@ public class RedBlack {
 		search(root);
 		System.out.println();
 	}
-	
+
 	private void search(RedBlackNode n) {
 		if (n.isFake())
 			return;
-		char c = n.getColor()? 'b':'r';
+		char c = n.getColor() ? 'b' : 'r';
 		System.out.print(n.getValue() + c + " ");
 		search(n.getLeft());
 		search(n.getRight());
-	}
+	}*/
 	
 }
 
