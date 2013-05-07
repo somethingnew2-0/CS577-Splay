@@ -3,10 +3,12 @@ package com.algorithms.splay;
 public class Sum {
 	
 	private Node root;
+	private int baseLength;
 	
 	public Sum(int[] numbers) {
-		Node[] baseNodes = new Node[numbers.length];
-		for (int i = 0; i < numbers.length; i++) {
+		baseLength = numbers.length;
+		Node[] baseNodes = new Node[baseLength];
+		for (int i = 0; i < baseLength; i++) {
 			baseNodes[i] = new Node(numbers[i]);
 		}
 		root = createTree(baseNodes);
