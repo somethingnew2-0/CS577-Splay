@@ -2,73 +2,73 @@ package com.algorithms.splay;
 
 public class Splay {
 
-	private SplayNode root;
+	private Node root;
 	
 	public Splay() {
-//		root = new SplayNode(0);
+//		root = new Node(0);
 	}
 	
-	public SplayNode insert(int value) {
+	public Node insert(int value) {
 		if(root == null) {
-			root = new SplayNode(value);
+			root = new Node(value);
 			return root;
 		} else {
 			return insert(value, root);
 		}
 	}
 	
-	private SplayNode insert(int value, SplayNode node) {
+	private Node insert(int value, Node node) {
 		if(node.getValue() == value) {
 			splay(node);
 			return node;
 		} else if (value < node.getValue()) {
 			if(node.getLeft() == null) {
-				node.setLeft(new SplayNode(value));
-				return (SplayNode)node.getLeft();
+				node.setLeft(new Node(value));
+				return node.getLeft();
 			}
 			else {
-				return insert(value, (SplayNode)node.getLeft());
+				return insert(value, node.getLeft());
 			}
 		} else {
 			if(node.getRight() == null) {
-				node.setRight(new SplayNode(value));
-				return (SplayNode)node.getRight();
+				node.setRight(new Node(value));
+				return node.getRight();
 			}
 			else {
-				return insert(value, (SplayNode)node.getRight());
+				return insert(value, node.getRight());
 			}
 		}
 	}
 	
-	public SplayNode find(int value) {
+	public Node find(int value) {
 		return find(value, root);
 	}
 	
-	private SplayNode find(int value, SplayNode node) {
+	private Node find(int value, Node node) {
 		if(node.getValue() == value) {
 			splay(node);
 			return node;
 		} else if (value < node.getValue()) {
 			if(node.getLeft() != null) {
-				return find(value, (SplayNode)node.getLeft());
+				return find(value, node.getLeft());
 			}
 		} else if (value > node.getValue()) {
 			if(node.getRight() != null) {
-				return find(value, (SplayNode)node.getRight());
+				return find(value, node.getRight());
 			}
 		}
 		return null;
 	}
 	
-	private void splay(SplayNode node) {
+	private void splay(Node node) {
 		while(!node.isRoot()) {
 			if(node.getParent().isRoot()) {
 				zig(node);
 			}
-			else if(((SplayNode)node.getParent()).isLeft() && node.isLeft()) {
+			else if(node.getParent().isLeft() && node.isLeft()) {
 				zigZig(node);
 			}
-			else if(((SplayNode)node.getParent()).isRight() && node.isRight()) {
+			else if(node.getParent().isRight() && node.isRight()) {
 				zigZig(node);
 			}
 			else {
@@ -78,27 +78,27 @@ public class Splay {
 		}
 	}
 	
-	private void zig(SplayNode node) {
-		SplayNode parent = (SplayNode)node.getParent();
+	private void zig(Node node) {
+		Node parent = node.getParent();
 		if(node.isLeft()) {
-			parent.setLeft((SplayNode)node.getRight());
+			parent.setLeft(node.getRight());
 			node.setRight(parent);			
 		}
 		else {
-			parent.setRight((SplayNode)node.getLeft());
+			parent.setRight(node.getLeft());
 			node.setLeft(parent);
 		}
 		setRoot(node);
 	}
 	
-	private void zigZig(SplayNode node) {
-		SplayNode parent = (SplayNode)node.getParent();
-		SplayNode grandparent = (SplayNode)parent.getParent();
+	private void zigZig(Node node) {
+		Node parent = node.getParent();
+		Node grandparent = parent.getParent();
 		if(parent.isLeft()) {
 			parentCurrentNode(node, grandparent);
 
-			grandparent.setLeft((SplayNode)parent.getRight());
-			parent.setLeft((SplayNode)node.getRight());
+			grandparent.setLeft(parent.getRight());
+			parent.setLeft(node.getRight());
 
 			parent.setRight(grandparent);
 			node.setRight(parent);
@@ -106,49 +106,49 @@ public class Splay {
 		else {
 			parentCurrentNode(node, grandparent);
 			
-			grandparent.setRight((SplayNode)parent.getLeft());
-			parent.setRight((SplayNode)node.getLeft());
+			grandparent.setRight(parent.getLeft());
+			parent.setRight(node.getLeft());
 
 			parent.setLeft(grandparent);
 			node.setLeft(parent);
 		}
 	}
 	
-	private void zigZag(SplayNode node) {
-		SplayNode parent = (SplayNode)node.getParent();
-		SplayNode grandparent = (SplayNode)parent.getParent();
+	private void zigZag(Node node) {
+		Node parent = node.getParent();
+		Node grandparent = parent.getParent();
 		if(parent.isLeft()) {
 			parentCurrentNode(node, grandparent);
 			
-			grandparent.setLeft((SplayNode)node.getRight());
-			parent.setRight((SplayNode)node.getLeft());
+			grandparent.setLeft(node.getRight());
+			parent.setRight(node.getLeft());
 			
 			node.setRight(grandparent);
 			node.setLeft(parent);			
 		} else {
 			parentCurrentNode(node, grandparent);
 
-			grandparent.setRight((SplayNode)node.getLeft());
-			parent.setLeft((SplayNode)node.getRight());
+			grandparent.setRight(node.getLeft());
+			parent.setLeft(node.getRight());
 			
 			node.setLeft(grandparent);
 			node.setRight(parent);
 		}
 	}
 	
-	private void parentCurrentNode(SplayNode node, SplayNode grandparent) {
+	private void parentCurrentNode(Node node, Node grandparent) {
 		if(grandparent.isRoot()) {
 			setRoot(node);
 		} else {
 			if(grandparent.isLeft()) {
-				((SplayNode)grandparent.getParent()).setLeft(node);
+				grandparent.getParent().setLeft(node);
 			} else {
-				((SplayNode)grandparent.getParent()).setRight(node);
+				grandparent.getParent().setRight(node);
 			}
 		}
 	}
 	
-	private void setRoot(SplayNode node) {
+	private void setRoot(Node node) {
 		node.setParent(null);
 		root = node;
 	}
@@ -162,7 +162,7 @@ public class Splay {
 			splay.insert(i);
 		}
 		for (int i = 100; i >= 1; i--) {
-			SplayNode node = splay.find(i);
+			Node node = splay.find(i);
 			System.out.println(node.getValue());
 		}
 		
