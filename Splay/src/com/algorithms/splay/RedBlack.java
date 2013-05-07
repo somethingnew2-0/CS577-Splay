@@ -66,11 +66,9 @@ public class RedBlack {
 		child.setValue(value);
 		child.setParent(tmp);
 		if (value < tmp.getValue()) {
-			assert(((RedBlackNode) tmp.getLeft()).isFake());
 			tmp.setLeft(child);
 		}
 		else {
-			assert(((RedBlackNode) tmp.getRight()).isFake());
 			tmp.setRight(child);
 		}
 		
