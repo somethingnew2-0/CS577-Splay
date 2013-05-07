@@ -74,7 +74,7 @@ public class Splay {
 	
 	private static void splay(Node node) {
 		while(!node.isRoot()) {
-			operations++;
+//			operations++;
 			if(node.getParent().isRoot()) {
 				zig(node);
 			}

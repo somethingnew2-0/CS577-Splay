@@ -3,7 +3,7 @@ package com.algorithms.splay;
 import java.util.Random;
 
 public class TreeComparator {
-	public static final int N = 100; 
+	public static final int N = 250; 
 	
 	
 	/**
