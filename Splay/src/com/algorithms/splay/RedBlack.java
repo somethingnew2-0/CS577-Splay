@@ -1,9 +1,6 @@
 package com.algorithms.splay;
 
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
 
 public class RedBlack {
 	RedBlackNode root;
@@ -22,9 +19,9 @@ public class RedBlack {
 		while (!tmp.isFake()) {
 			prevPtr = tmp;
 			if (value < tmp.getValue())
-				tmp = tmp.getLeft();
+				tmp = (RedBlackNode) tmp.getLeft();
 			else
-				tmp = tmp.getRight();
+				tmp = (RedBlackNode) tmp.getRight();
 		}
 		return prevPtr;
 	}
@@ -39,12 +36,12 @@ public class RedBlack {
 		if (node.getValue() == value) {
 			return node;
 		} else if (value < node.getValue()) {
-			if (!node.getLeft().isFake()) {
-				return find(value, node.getLeft());
+			if (!((RedBlackNode) node.getLeft()).isFake()) {
+				return find(value, (RedBlackNode) node.getLeft());
 			}
 		} else if (value > node.getValue()) {
-			if (!node.getRight().isFake()) {
-				return find(value, node.getRight());
+			if (!((RedBlackNode) node.getRight()).isFake()) {
+				return find(value, (RedBlackNode) node.getRight());
 			}
 		}
 		
@@ -58,8 +55,8 @@ public class RedBlack {
 			root = new RedBlackNode(BLACK);
 			root.setValue(value);
 			//insert fake leaves
-			root.setRight(new RedBlackNode(FAKE));
-			root.setLeft(new RedBlackNode(FAKE));
+			root.setRight(new RedBlackNode(true, true));
+			root.setLeft(new RedBlackNode(true, true));
 			return;
 		}
 			
@@ -69,25 +66,25 @@ public class RedBlack {
 		child.setValue(value);
 		child.setParent(tmp);
 		if (value < tmp.getValue()) {
-			assert(tmp.getLeft().isFake());
+			assert(((RedBlackNode) tmp.getLeft()).isFake());
 			tmp.setLeft(child);
 		}
 		else {
-			assert(tmp.getRight().isFake());
+			assert(((RedBlackNode) tmp.getRight()).isFake());
 			tmp.setRight(child);
 		}
 		
 		//insert fake leaves
-		child.setRight(new RedBlackNode(FAKE));
-		child.setLeft(new RedBlackNode(FAKE));
+		child.setRight(new RedBlackNode(true, true));
+		child.setLeft(new RedBlackNode(true, true));
 		
 		RedBlackNode x = child;
-		while ( (x != root) && (x.getParent().getColor() == RED)) {
+		while ( (x != root) && (((RedBlackNode) x.getParent()).getColor() == RED)) {
 			if (x.getParent().isLeft()) {
 				RedBlackNode gParent = grandparent(x);
-				RedBlackNode uncle = gParent.getRight();
+				RedBlackNode uncle = (RedBlackNode) gParent.getRight();
 				if (uncle.getColor() == RED) {
-					child.getParent().setBlack();
+					((RedBlackNode) child.getParent()).setBlack();
 					uncle.setBlack();
 					gParent.setRed();
 					x = gParent; // move x up the tree
@@ -95,19 +92,19 @@ public class RedBlack {
 				else { 
 					if (x.isRight()) {
 						// move x up and rotate
-						x = x.getParent();
+						x = (RedBlackNode) x.getParent();
 						rotate_left(x);
 					}
-					x.getParent().setBlack();
+					((RedBlackNode) x.getParent()).setBlack();
 					grandparent(x).setRed();
 					rotate_right(grandparent(x));
 				}
 			}
 			else { // parent is right child
 				RedBlackNode gParent = grandparent(x);
-				RedBlackNode uncle = gParent.getLeft();
+				RedBlackNode uncle = (RedBlackNode) gParent.getLeft();
 				if (uncle.getColor() == RED) {
-					child.getParent().setBlack();
+					((RedBlackNode) child.getParent()).setBlack();
 					uncle.setBlack();
 					gParent.setRed();
 					x = gParent; // move x up the tree
@@ -115,10 +112,10 @@ public class RedBlack {
 				else { 
 					if (x.isLeft()) {
 						// move x up and rotate
-						x = x.getParent();
+						x = (RedBlackNode) x.getParent();
 						rotate_right(x);
 					}
-					x.getParent().setBlack();
+					((RedBlackNode) x.getParent()).setBlack();
 					grandparent(x).setRed();
 					rotate_left(grandparent(x));
 				}
@@ -128,9 +125,9 @@ public class RedBlack {
 	}
 
 	private void rotate_right(RedBlackNode x) {
-		RedBlackNode y = x.getLeft();
+		RedBlackNode y = (RedBlackNode) x.getLeft();
 		x.setLeft(y.getRight());
-		if (!y.getRight().isFake()) {
+		if (!((RedBlackNode) y.getRight()).isFake()) {
 			y.getRight().setParent(x);
 		}
 		y.setParent(x.getParent());
@@ -148,9 +145,9 @@ public class RedBlack {
 	}
 	
 	private void rotate_left(RedBlackNode x) {
-		RedBlackNode y = x.getRight();
+		RedBlackNode y = (RedBlackNode) x.getRight();
 		x.setRight(y.getLeft());
-		if (!y.getLeft().isFake()) {
+		if (!((RedBlackNode) y.getLeft()).isFake()) {
 			y.getLeft().setParent(x);
 		}
 		y.setParent(x.getParent());
@@ -169,7 +166,7 @@ public class RedBlack {
 	
 	private RedBlackNode grandparent(RedBlackNode n) {
 		if ((n != null) && (n.getParent() != null))
-			return n.getParent().getParent();
+			return (RedBlackNode) n.getParent().getParent();
 		else 
 			return null;
 	}

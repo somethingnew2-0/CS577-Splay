@@ -41,6 +41,10 @@ public class Node {
 			left.setParent(this);
 		}
 	}
+	
+	public boolean isLeft() {
+		return !isRoot() && parent.getLeft() == this;
+	}
 
 	public Node getRight() {
 		return rightChild;
@@ -51,6 +55,10 @@ public class Node {
 		if(right != null) {
 			right.setParent(this);
 		}
+	}
+	
+	public boolean isRight() {
+		return !isRoot() && parent.getRight() == this;
 	}
 	
 	public boolean isRoot() {
