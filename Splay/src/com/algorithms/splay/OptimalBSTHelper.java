@@ -52,7 +52,6 @@ public class OptimalBSTHelper {
 		Pair bounds = new Pair(i, j);
 		Integer sum = sumMap.get(bounds);
 		if(sum == null) {
-			System.out.println(i + " " + j);
 			sum = 0;
 		    for (int k = i; k <=j; k++) {
 		    	sum += freq[k];

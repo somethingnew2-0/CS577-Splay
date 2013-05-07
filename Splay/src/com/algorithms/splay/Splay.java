@@ -3,9 +3,14 @@ package com.algorithms.splay;
 public class Splay {
 
 	private Node root;
-	
+	private static int operations;
+
 	public Splay() {
-//		root = new Node(0);
+		operations = 0;
+	}
+	
+	public int getOperations() {
+		return operations;
 	}
 	
 	public Node insert(int value) {
@@ -13,26 +18,31 @@ public class Splay {
 			root = new Node(value);
 			return root;
 		} else {
-			return insert(value, root);
+			root = insert(value, root);
+			return root;
 		}
 	}
 	
-	private Node insert(int value, Node node) {
+	private static Node insert(int value, Node node) {
 		if(node.getValue() == value) {
 			splay(node);
 			return node;
 		} else if (value < node.getValue()) {
 			if(node.getLeft() == null) {
-				node.setLeft(new Node(value));
-				return node.getLeft();
+				Node newNode = new Node(value);
+				node.setLeft(newNode);
+				splay(newNode);
+				return newNode;
 			}
 			else {
 				return insert(value, node.getLeft());
 			}
 		} else {
 			if(node.getRight() == null) {
-				node.setRight(new Node(value));
-				return node.getRight();
+				Node newNode = new Node(value);
+				node.setRight(newNode);
+				splay(newNode);
+				return newNode;
 			}
 			else {
 				return insert(value, node.getRight());
@@ -41,10 +51,12 @@ public class Splay {
 	}
 	
 	public Node find(int value) {
-		return find(value, root);
+		root = find(value, root);
+		return root;
 	}
 	
-	private Node find(int value, Node node) {
+	private static Node find(int value, Node node) {
+		operations++;
 		if(node.getValue() == value) {
 			splay(node);
 			return node;
@@ -60,8 +72,9 @@ public class Splay {
 		return null;
 	}
 	
-	private void splay(Node node) {
+	private static void splay(Node node) {
 		while(!node.isRoot()) {
+			operations++;
 			if(node.getParent().isRoot()) {
 				zig(node);
 			}
@@ -74,11 +87,10 @@ public class Splay {
 			else {
 				zigZag(node);
 			}
-			
 		}
 	}
 	
-	private void zig(Node node) {
+	private static void zig(Node node) {
 		Node parent = node.getParent();
 		if(node.isLeft()) {
 			parent.setLeft(node.getRight());
@@ -88,10 +100,10 @@ public class Splay {
 			parent.setRight(node.getLeft());
 			node.setLeft(parent);
 		}
-		setRoot(node);
+		node.setParent(null);
 	}
 	
-	private void zigZig(Node node) {
+	private static void zigZig(Node node) {
 		Node parent = node.getParent();
 		Node grandparent = parent.getParent();
 		if(parent.isLeft()) {
@@ -114,7 +126,7 @@ public class Splay {
 		}
 	}
 	
-	private void zigZag(Node node) {
+	private static void zigZag(Node node) {
 		Node parent = node.getParent();
 		Node grandparent = parent.getParent();
 		if(parent.isLeft()) {
@@ -136,9 +148,9 @@ public class Splay {
 		}
 	}
 	
-	private void parentCurrentNode(Node node, Node grandparent) {
+	private static void parentCurrentNode(Node node, Node grandparent) {
 		if(grandparent.isRoot()) {
-			setRoot(node);
+			node.setParent(null);
 		} else {
 			if(grandparent.isLeft()) {
 				grandparent.getParent().setLeft(node);
@@ -146,11 +158,6 @@ public class Splay {
 				grandparent.getParent().setRight(node);
 			}
 		}
-	}
-	
-	private void setRoot(Node node) {
-		node.setParent(null);
-		root = node;
 	}
 	
 	/**
