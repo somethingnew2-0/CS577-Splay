@@ -16,7 +16,6 @@ public class TreeComparator {
 	private static Splay[] sTrees;
 	private static RedBlack[] rbTrees;
 	private static Random rand;
-	private static int randnum;
 	private static long startTime;
 	private static long endTime;
 	private static int[] array;
@@ -55,21 +54,21 @@ public class TreeComparator {
 		// Random Insert
 		long[][] randResults_splay = new long[3][4];
 		long[][] randResults_rb = new long[3][4];
-		RandomInsertTest(randResults_splay, randResults_rb, 0);
+		randomInsertTest(randResults_splay, randResults_rb, 0);
 		// in order lookup
-		InOrderLookupTest(randResults_splay, randResults_rb, 1, false);
+		inOrderLookupTest(randResults_splay, randResults_rb, 1, false);
 		// random lookup from array
-		RandomLookupTest(randResults_splay, randResults_rb, 2, false);
+		randomLookupTest(randResults_splay, randResults_rb, 2, false);
 		// random lookup from rand
-		RandomNumberLookupTest(randResults_splay, randResults_rb, 3, false);
+		randomNumberLookupTest(randResults_splay, randResults_rb, 3, false);
 		
 		// make the splay look good
 		long[][] favorSplayResults_splay = new long[3][15];
 		long[][] favorSplayResults_rb = new long[3][15];
-		ConstantLookupTest(favorSplayResults_splay, favorSplayResults_rb, 0);
-		WindowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 1000, 1);
-		WindowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 2);
-		FiniteRandomLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 3);
+		constantLookupTest(favorSplayResults_splay, favorSplayResults_rb, 0);
+		windowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 1000, 1);
+		windowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 2);
+		finiteRandomLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 3);
 
 		
 		// In-Order Insert
@@ -79,14 +78,14 @@ public class TreeComparator {
 			sTrees[i] = new Splay();
 			rbTrees[i] = new RedBlack();
 		}
-		InOrderInsertTest(inOrderResults_splay, inOrderResults_rb, 0);
+		inOrderInsertTest(inOrderResults_splay, inOrderResults_rb, 0);
 		// in order lookup
-		InOrderLookupTest(inOrderResults_splay, inOrderResults_rb, 1, true);
+		inOrderLookupTest(inOrderResults_splay, inOrderResults_rb, 1, true);
 		// random lookup from array
-		RandomLookupTest(inOrderResults_splay, inOrderResults_rb, 2, speedUp);
+		randomLookupTest(inOrderResults_splay, inOrderResults_rb, 2, speedUp);
 		// random lookup from rand
-		RandomNumberLookupTest(inOrderResults_splay, inOrderResults_rb, 3, speedUp);
-		InOrderWindowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 4);
+		randomNumberLookupTest(inOrderResults_splay, inOrderResults_rb, 3, speedUp);
+		inOrderWindowLookupTest(favorSplayResults_splay, favorSplayResults_rb, 100, 4);
 		
 		
 		
@@ -162,7 +161,7 @@ public class TreeComparator {
 	// hundred thou lookups
 	// generate a set of size size of random numbers.
 	// randomly pick from the set as the array index for the number to look up
-	private static void FiniteRandomLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
+	private static void finiteRandomLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
 			int size, int col) {
 				
 		int[] randomNumberSet = new int[size];
@@ -200,7 +199,7 @@ public class TreeComparator {
 	
 	// hundred thousand lookups
 	// only looks up numbers from a small set of array indices, chosen at random
-	private static void WindowLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
+	private static void windowLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
 			int window, int col) {
 		
 		int[] randomNumbers = new int[HUNDRED_THOUSAND];
@@ -235,7 +234,7 @@ public class TreeComparator {
 	
 	// hundred thousand lookups
 	// use inorder for this one
-	private static void InOrderWindowLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
+	private static void inOrderWindowLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, 
 			int window, int col) {
 		int[] randomNumbers = new int[HUNDRED_THOUSAND];
 		
@@ -271,7 +270,7 @@ public class TreeComparator {
 	
 
 	// hundred thousand lookups of some number in the trees, for largest trees only
-	private static void ConstantLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, int col) {
+	private static void constantLookupTest(long[][] favorSplayResults_splay, long[][] favorSplayResults_rb, int col) {
 		startTime = System.currentTimeMillis();
 		for (int i = 0; i < HUNDRED_THOUSAND / 3; i++) {
 			sTrees[2].find(array[15]); // 15 arbitrary
@@ -301,7 +300,7 @@ public class TreeComparator {
 	}
 	
 	// insert a million into 0, 10 mil into 1, and 100 mil into 2 (I CHANGED THIS)
-	private static void RandomInsertTest(long[][] randResults_splay, long[][] randResults_rb, int col) {
+	private static void randomInsertTest(long[][] randResults_splay, long[][] randResults_rb, int col) {
 		for (int i = 0; i < 3; i++) {
 			if (!thirdTest && i == 2)
 				continue;
@@ -325,7 +324,7 @@ public class TreeComparator {
 	}
 	
 	// insert 0, 1, 2...
-	public static void InOrderInsertTest(long[][] inOrderResults_splay, long[][] inOrderResults_rb, int col) {
+	public static void inOrderInsertTest(long[][] inOrderResults_splay, long[][] inOrderResults_rb, int col) {
 		for (int i = 0; i < 3; i++) {
 			if (!thirdTest && i == 2)
 				continue;
@@ -354,7 +353,7 @@ public class TreeComparator {
 	}
 	
 	// lookup everything in order of insertion
-	private static void InOrderLookupTest(long[][] randResults_splay, long[][] randResults_rb, int col, boolean forInOrder) {
+	private static void inOrderLookupTest(long[][] randResults_splay, long[][] randResults_rb, int col, boolean forInOrder) {
 		for (int i = 0; i < 3; i++) {
 			if (!thirdTest && i == 2)
 				continue;
@@ -394,7 +393,7 @@ public class TreeComparator {
 	}
 	
 	// lookup 100,000 things at random from array
-	public static void RandomLookupTest(long[][] randResults_splay, long[][] randResults_rb, 
+	public static void randomLookupTest(long[][] randResults_splay, long[][] randResults_rb, 
 			int col, boolean skipForSplay) {
 		for (int i = 0; i < 3; i++) {
 
@@ -430,11 +429,9 @@ public class TreeComparator {
 	}
 	
 	// lookup 100,000 random numbers
-	public static void RandomNumberLookupTest(long[][] randResults_splay, long[][] randResults_rb, 
+	public static void randomNumberLookupTest(long[][] randResults_splay, long[][] randResults_rb, 
 			int col, boolean skipForSplay) {
 		for (int i = 0; i < 3; i++) {
-			final int endingConstant = (int) (TEN_THOUSAND * Math.pow(10, i)) - 1;
-
 			int[] randomNumbers = new int[HUNDRED_THOUSAND];
 
 			// generate random numbers ahead of time
