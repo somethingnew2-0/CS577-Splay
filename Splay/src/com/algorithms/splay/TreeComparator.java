@@ -17,7 +17,7 @@ public class TreeComparator {
 		
 		// Do in order lookup tests
 		System.out.println("In Order Lookup Tests");
-		System.out.format("%-8s%-8s%s\n", "N", "Splay", "OptimalBST");
+		System.out.format("%s,%s,%s\n", "N", "Splay", "OptimalBST");
 		for (int n = 1; n <= N; n++) {
 			splay = new Splay();
 			keys = new int[n];
@@ -35,17 +35,17 @@ public class TreeComparator {
 				}
 			}
 			
-			System.out.format("%-8d%-8d%d\n", n, splay.getOperations(), OptimalBSTHelper.optimalSearchTree(keys, freq));
+			System.out.format("%d,%d,%d\n", n, splay.getOperations(), OptimalBSTHelper.optimalSearchTree(keys, freq));
 		}
 		
 		System.out.println("Distribution of Lookups for N = " + keys.length);
 		for (int i = 0; i < keys.length; i++) {
-			System.out.format("%-8d%d\n", keys[i], freq[i]);
+			System.out.format("%d,%d\n", keys[i], freq[i]);
 		}
 		
 		// Do random tests
 		System.out.println("Random Lookup Tests with Sampling");
-		System.out.format("%-8s%-8s%s\n", "N", "SplayAvg", "OptimalBSTAvg");
+		System.out.format("%s,%s,%s\n", "N", "SplayAvg", "OptimalBSTAvg");
 		for (int n = 1; n <= N; n++) {
 			int splayAvg = 0;
 			int optimalBSTAvg = 0;
@@ -72,17 +72,17 @@ public class TreeComparator {
 			splayAvg /= SAMPLES;
 			optimalBSTAvg /= SAMPLES;
 			
-			System.out.format("%-8d%-8d%d\n", n, splayAvg, optimalBSTAvg);
+			System.out.format("%d,%d,%d\n", n, splayAvg, optimalBSTAvg);
 		}
 		
 		System.out.println("Distribution of Lookups for N = " + keys.length);
 		for (int i = 0; i < keys.length; i++) {
-			System.out.format("%-8d%d\n", keys[i], freq[i]);
+			System.out.format("%d,%d\n", keys[i], freq[i]);
 		}
 		
 		// Do redundant lookup (high frequency tests)
 		System.out.println("Redundant Lookup Tests");
-		System.out.format("%-8s%-8s%s\n", "N", "Splay", "OptimalBST");
+		System.out.format("%s,%s,%s\n", "N", "Splay", "OptimalBST");
 		for (int n = 1; n <= N; n++) {
 			splay = new Splay();
 			keys = new int[n];
@@ -100,12 +100,12 @@ public class TreeComparator {
 				}
 			}
 			
-			System.out.format("%-8d%-8d%d\n", n, splay.getOperations(), OptimalBSTHelper.optimalSearchTree(keys, freq));
+			System.out.format("%d,%d,%d\n", n, splay.getOperations(), OptimalBSTHelper.optimalSearchTree(keys, freq));
 		}
 		
 		System.out.println("Distribution of Lookups for N = " + keys.length);
 		for (int i = 0; i < keys.length; i++) {
-			System.out.format("%-8d%d\n", keys[i], freq[i]);
+			System.out.format("%d,%d\n", keys[i], freq[i]);
 		}
 	}
 
