@@ -24,7 +24,7 @@ public class TreeComparator {
 			freq = new int[n];
 			for (int number = 0; number < n; number++) {
 				keys[number] = number;
-				freq[number]++;
+//				freq[number]++;
 				splay.insert(number);
 			}
 			
@@ -55,7 +55,7 @@ public class TreeComparator {
 				freq = new int[n];
 				for (int number = 0; number < n; number++) {
 					keys[number] = number;
-					freq[number]++;
+//					freq[number]++;
 					splay.insert(number);
 				}
 				
@@ -89,7 +89,7 @@ public class TreeComparator {
 			freq = new int[n];
 			for (int number = 0; number < n; number++) {
 				keys[number] = number;
-				freq[number]++;
+//				freq[number]++;
 				splay.insert(number);
 			}
 			
